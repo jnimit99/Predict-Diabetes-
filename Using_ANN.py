@@ -31,17 +31,19 @@ from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import Dropout 
 classifier=Sequential()
-classifier.add(Dense(output_dim=4,init='uniform',activation='relu',input_dim=8))
+classifier.add(Dense(output_dim=40,init='uniform',activation='relu',input_dim=8))
 classifier.add(Dropout(p=0.1))
-classifier.add(Dense(output_dim=2,init='uniform',activation='relu'))
+classifier.add(Dense(output_dim=20,init='uniform',activation='relu'))
+classifier.add(Dense(output_dim=4,init='uniform',activation='relu'))
 classifier.add(Dense(output_dim=1,init='uniform',activation='sigmoid'))
 
 classifier.compile(optimizer='adam',loss='binary_crossentropy',metrics=['accuracy'])
-classifier.fit(X_train,y_train,epochs=50,batch_size=10)
+classifier.fit(X_train,y_train,epochs=300,batch_size=50)
 
 y_pred=classifier.predict(X_test)
 
 y_pred=(y_pred>0.5)
 
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix,accuracy_score
 cm = confusion_matrix(y_test, y_pred)
+print(accuracy_score(y_test, y_pred))
